@@ -1,0 +1,479 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+
+const base = import.meta.env.BASE_URL.replace(/\/?$/, "/");
+
+const skills = [
+  {
+    category: "Languages & Query",
+    icon: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14a9 3 0 0 0 18 0V5"/><path d="M3 12a9 3 0 0 0 18 0"/></svg>`,
+    items: ["SQL", "SAS", "Python", "Advanced Excel"],
+  },
+  {
+    category: "BI & Visualization",
+    icon: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="20" x2="12" y2="10"/><line x1="18" y1="20" x2="18" y2="4"/><line x1="6" y1="20" x2="6" y2="16"/></svg>`,
+    items: ["Power BI", "Tableau", "MicroStrategy", "DAX", "Dashboard Design", "Data Storytelling"],
+  },
+  {
+    category: "Analytics & Methods",
+    icon: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg>`,
+    items: ["Benchmarking", "Trend & Baseline Analysis", "KPI Reporting", "Risk-Model APIs", "Predictive Insights", "Competitive Analysis"],
+  },
+  {
+    category: "Healthcare Domain",
+    icon: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>`,
+    items: ["Healthcare Performance Analytics", "Ambulatory Quality Metrics", "Readmissions", "Clinical Documentation Improvement (CDI)", "Clinical Data", "Health Informatics"],
+  },
+  {
+    category: "Automation & AI",
+    icon: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg>`,
+    items: ["Automated Validation Pipelines", "Data-Quality Automation", "Custom GPT / LLM Tools", "Python Scripting"],
+  },
+  {
+    category: "Collaboration & Delivery",
+    icon: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>`,
+    items: ["Cross-functional Collaboration", "Client Engagements", "Stakeholder Reporting", "Program Evaluation", "Requirements Gathering"],
+  },
+];
+
+const education = [
+  {
+    school: "University of Missouri – Columbia",
+    degree: "MS, Health Informatics & Bioinformatics — 4.0 GPA",
+    years: "2021 – 2023",
+  },
+  {
+    school: "University of Missouri – Columbia",
+    degree: "Graduate Certificate, Healthcare Project Management",
+    years: "2021 – 2023",
+  },
+  {
+    school: "Devi Ahilya University, Indore, India",
+    degree: "MBA, Hospital Administration — 3.5 GPA",
+    years: "2016 – 2018",
+  },
+];
+
+const impactNumbers = [
+  { value: "40%", label: "Manual Review Cut", context: "Automated validation pipeline (SAS + Excel)" },
+  { value: "100%", label: "Data Alignment", context: "Extract-to-result validation (Python)" },
+  { value: "15+", label: "Member Requests", context: "Clinical performance insights delivered" },
+  { value: "75", label: "Classes Managed", context: "Data ops across 20+ schools statewide" },
+  { value: "4.0", label: "Graduate GPA", context: "MS, Health Informatics & Bioinformatics" },
+  { value: "3", label: "BI Platforms", context: "Power BI, Tableau, MicroStrategy" },
+];
+---
+
+<BaseLayout
+  title="About | Anushka Kanoongo"
+  description="Analytics & Insights professional in healthcare, based in Chicago. MS in Health Informatics & Bioinformatics. Learn about Anushka's journey, impact, and approach to turning data into decisions."
+>
+  <section class="section" aria-labelledby="about-heading">
+    <div class="container container--narrow">
+      <h1 id="about-heading" class="section-heading">About</h1>
+
+      <div class="about-profile fade-in">
+        <img
+          src={`${base}images/profile/anushka-kanoongo.jpg`}
+          alt="Anushka Kanoongo"
+          class="about-photo"
+          width="160"
+          height="160"
+          loading="eager"
+        />
+        <div class="about-intro">
+          <p class="about-lead">
+            I'm an <strong>Analytics &amp; Insights professional</strong> in healthcare, based in
+            Chicago, where I turn complex clinical, quality, and operational data into automation,
+            dashboards, and insights that drive strategic and operational impact. I hold an
+            <strong>MS in Health Informatics &amp; Bioinformatics</strong> (4.0 GPA) and an
+            <strong>MBA in Hospital Administration</strong>.
+          </p>
+        </div>
+      </div>
+
+      <div class="about-content fade-in">
+        <h2>The Journey</h2>
+
+        <p>
+          My path blends healthcare, business, and data. I began with an <strong>MBA in Hospital
+          Administration</strong> in India, then moved to the U.S. to earn an <strong>MS in Health
+          Informatics &amp; Bioinformatics</strong> (4.0 GPA) and a Graduate Certificate in
+          Healthcare Project Management at the University of Missouri. As a Graduate Research
+          Assistant, I managed data operations for 75 classes across 20+ schools statewide,
+          supporting grant review and program evaluation.
+        </p>
+
+        <p>
+          During a Data Management &amp; Operations co-op at <strong>The Resource Group</strong> in
+          St. Louis, I built a Tableau dashboard delivering evidence-based estimated delivery times
+          to improve backorder management, and supported SQL projects to standardize data and
+          streamline processes.
+        </p>
+
+        <p>
+          At <strong>Vizient</strong> in Chicago, I joined as a Healthcare Analytics Fellow —
+          converting MicroStrategy dashboards to Power BI, building a Tableau readmissions
+          dashboard, and prototyping API-driven analytics — while delivering 15+ member requests
+          that turned clinical data into performance insights.
+        </p>
+
+        <p>
+          As an <strong>Analytics &amp; Insights Associate</strong>, I now focus on automation and
+          quality: I engineered a SAS + Excel validation pipeline that cut manual review time by
+          40%, built Python benchmarking for 100% data alignment, and created a custom GPT to
+          accelerate how my team shares knowledge and leads client engagements.
+        </p>
+
+        <h2>What Drives Me</h2>
+
+        <ol class="about-principles">
+          <li>
+            <strong>Insight over output.</strong> A dashboard only matters if it changes a decision —
+            I start from the question stakeholders need answered and work back to the data.
+          </li>
+          <li>
+            <strong>Automate the tedious.</strong> From validation pipelines to benchmarking scripts
+            to a custom GPT, I build automation that frees people for higher-value work.
+          </li>
+          <li>
+            <strong>Accuracy you can trust.</strong> In healthcare, wrong numbers have real
+            consequences — validation, benchmarking, and data quality are non-negotiable.
+          </li>
+        </ol>
+
+        <h2>Education</h2>
+        <div class="about-education-list">
+          {
+            education.map((e) => (
+              <div class="about-education">
+                <div class="about-edu-badge" aria-hidden="true">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10 12 5 2 10l10 5 10-5Z"/><path d="M6 12v5c0 1 2.5 2.5 6 2.5s6-1.5 6-2.5v-5"/></svg>
+                </div>
+                <div>
+                  <p><strong>{e.school}</strong></p>
+                  <p>{e.degree}</p>
+                  <p class="about-edu-years">{e.years}</p>
+                </div>
+              </div>
+            ))
+          }
+        </div>
+
+        <div class="about-resume">
+          <a href={`${base}Anushka_Kanoongo_Resume.pdf`} class="btn btn--secondary" target="_blank" rel="noopener noreferrer">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <path d="M8 2v8m0 0l-3-3m3 3l3-3M3 12v1a1 1 0 001 1h8a1 1 0 001-1v-1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            Download Resume (PDF)
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Impact Numbers -->
+  <section class="section section--compact" aria-labelledby="impact-heading">
+    <div class="container container--narrow">
+      <h2 id="impact-heading" class="section-heading">Impact by the Numbers</h2>
+      <div class="impact-grid stagger-children">
+        {
+          impactNumbers.map(({ value, label, context }) => (
+            <div class="impact-card fade-in" data-glow>
+              <p class="impact-card__value">{value}</p>
+              <p class="impact-card__label">{label}</p>
+              <p class="impact-card__context">{context}</p>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Skills -->
+  <section class="section section--compact" aria-labelledby="skills-heading">
+    <div class="container container--narrow">
+      <h2 id="skills-heading" class="section-heading">Technical Skills</h2>
+      <div class="skills-grid stagger-children">
+        {
+          skills.map(({ category, icon, items }) => (
+            <div class="skills-card" data-glow>
+              <div class="skills-card__header">
+                <div class="skills-card__icon" set:html={icon} />
+                <h3 class="skills-card__title">{category}</h3>
+              </div>
+              <div class="skills-card__tags">
+                {items.map((skill) => (
+                  <span class="tag">{skill}</span>
+                ))}
+              </div>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="section section--compact" style="text-align:center;" aria-labelledby="about-cta">
+    <div class="container container--narrow">
+      <h2 id="about-cta" class="section-heading">Want to work together?</h2>
+      <p class="section-subheading" style="margin-inline:auto;">
+        I'm open to healthcare and quality analytics, BI, and analytics & insights roles — and
+        always happy to talk data.
+      </p>
+      <a href={`${base}contact/`} class="btn btn--primary">Get in Touch</a>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .section--compact {
+    padding-block: var(--space-10);
+  }
+
+  .about-profile {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-8);
+    margin-bottom: var(--space-8);
+  }
+
+  .about-photo {
+    width: 160px;
+    height: 160px;
+    border-radius: var(--radius-lg);
+    object-fit: cover;
+    border: 1px solid var(--color-border);
+    flex-shrink: 0;
+  }
+
+  .about-lead {
+    font-size: var(--text-lg);
+    color: var(--color-text);
+    line-height: var(--leading-relaxed);
+  }
+
+  .about-content p {
+    margin-bottom: var(--space-4);
+  }
+
+  .about-content h2 {
+    font-size: var(--text-xl);
+    margin-top: var(--space-10);
+    margin-bottom: var(--space-4);
+  }
+
+  .about-principles {
+    list-style: decimal;
+    padding-left: var(--space-6);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    margin-bottom: var(--space-6);
+  }
+
+  .about-principles li {
+    color: var(--color-text-secondary);
+    line-height: var(--leading-relaxed);
+  }
+
+  .about-principles strong {
+    color: var(--color-text);
+  }
+
+  .about-education-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  .about-education {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+    padding: var(--space-4) var(--space-6);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background: var(--color-card-bg);
+  }
+
+  .about-edu-badge {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    border-radius: var(--radius-md);
+    background: var(--gradient-subtle);
+    border: 1px solid var(--color-border);
+    color: var(--color-accent);
+    flex-shrink: 0;
+  }
+
+  .about-education p {
+    margin-bottom: 0;
+    color: var(--color-text-secondary);
+  }
+
+  .about-education strong {
+    color: var(--color-text);
+  }
+
+  .about-edu-years {
+    font-size: var(--text-xs);
+    color: var(--color-text-tertiary);
+    margin-top: var(--space-1);
+  }
+
+  .about-resume {
+    margin-top: var(--space-6);
+  }
+
+  /* Impact Grid */
+  .impact-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-4);
+  }
+
+  .impact-card {
+    padding: var(--space-5);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    background: var(--color-card-bg);
+    text-align: center;
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+  }
+
+  .impact-card__value {
+    font-size: var(--text-3xl);
+    font-weight: 800;
+    background: var(--gradient-accent-text);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    line-height: 1;
+    margin-bottom: var(--space-1);
+  }
+
+  .impact-card__label {
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: var(--color-text);
+    margin-bottom: var(--space-1);
+  }
+
+  .impact-card__context {
+    font-size: var(--text-xs);
+    color: var(--color-text-tertiary);
+  }
+
+  /* Skills */
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-6);
+  }
+
+  .skills-card {
+    padding: var(--space-6);
+    border-radius: var(--radius-lg);
+    background: var(--color-card-bg);
+    border: 1px solid var(--color-border);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+  }
+
+  .skills-card__header {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    margin-bottom: var(--space-5);
+  }
+
+  .skills-card__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: var(--radius-md);
+    background: var(--gradient-subtle);
+    border: 1px solid var(--color-border);
+    color: var(--color-accent);
+    flex-shrink: 0;
+  }
+
+  .skills-card__title {
+    font-size: var(--text-base);
+    font-weight: 600;
+  }
+
+  .skills-card__tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2);
+    padding: var(--space-3) var(--space-6);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    border-radius: var(--radius-full);
+    transition:
+      background var(--duration-fast) var(--ease-out),
+      transform var(--duration-fast) var(--ease-out),
+      box-shadow var(--duration-fast) var(--ease-out);
+  }
+
+  .btn:hover {
+    transform: translateY(-1px);
+  }
+
+  .btn--primary {
+    background: var(--gradient-accent);
+    color: #fff;
+  }
+
+  .btn--primary:hover {
+    box-shadow: 0 4px 20px rgba(20, 184, 166, 0.35), 0 0 40px rgba(16, 185, 129, 0.18);
+  }
+
+  .btn--secondary {
+    background: transparent;
+    color: var(--color-text);
+    border: 1px solid var(--color-border);
+  }
+
+  .btn--secondary:hover {
+    background: var(--color-bg-secondary);
+    border-color: var(--color-border-hover);
+  }
+
+  @media (max-width: 640px) {
+    .about-profile {
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    .about-photo {
+      width: 120px;
+      height: 120px;
+    }
+
+    .impact-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .skills-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

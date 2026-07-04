@@ -1,0 +1,21 @@
+{
+  "name": "anushka-kanoongo-portfolio",
+  "type": "module",
+  "version": "2.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "check": "astro check"
+  },
+  "dependencies": {
+    "astro": "^5.7.0",
+    "@astrojs/sitemap": "^3.3.0",
+    "@astrojs/mdx": "^4.2.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.8.0",
+    "@astrojs/check": "^0.9.0"
+  }
+}

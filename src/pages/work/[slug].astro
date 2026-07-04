@@ -1,0 +1,358 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import { getCollection } from "astro:content";
+import type { CollectionEntry } from "astro:content";
+
+export async function getStaticPaths() {
+  const work = await getCollection("work");
+  return work.map((entry) => ({
+    params: { slug: entry.slug },
+    props: { entry },
+  }));
+}
+
+interface Props {
+  entry: CollectionEntry<"work">;
+}
+
+const { entry } = Astro.props;
+const base = import.meta.env.BASE_URL.replace(/\/?$/, "/");
+const { Content } = await entry.render();
+const { title, summary, role, company, tags, tools, dataScope, impact, problem, approach, links, heroImage } =
+  entry.data;
+
+function formatDate(d: Date): string {
+  return d.toLocaleDateString("en-US", { month: "long", year: "numeric", timeZone: "UTC" });
+}
+const dateLabel = formatDate(entry.data.date);
+---
+
+<BaseLayout title={`${title} | Anushka Kanoongo`} description={summary}>
+  <article class="case-study">
+    <!-- Header -->
+    <header class="case-study__header section">
+      <div class="container container--narrow">
+        <a href={`${base}work/`} class="case-study__back" aria-label="Back to all case studies">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+            <path d="M10 3L5 8l5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+          All Case Studies
+        </a>
+        {company && <p class="case-study__company">{company}</p>}
+        <h1 class="case-study__title">{title}</h1>
+        <p class="case-study__summary">{summary}</p>
+        <div class="case-study__meta">
+          <div class="case-study__meta-item">
+            <span class="case-study__meta-label">Role</span>
+            <span class="case-study__meta-value">{role}</span>
+          </div>
+          <div class="case-study__meta-item">
+            <span class="case-study__meta-label">Tools</span>
+            <span class="case-study__meta-value">{tools.join(", ")}</span>
+          </div>
+          {dataScope && (
+            <div class="case-study__meta-item">
+              <span class="case-study__meta-label">Data Scope</span>
+              <span class="case-study__meta-value">{dataScope}</span>
+            </div>
+          )}
+          <div class="case-study__meta-item">
+            <span class="case-study__meta-label">Timeframe</span>
+            <span class="case-study__meta-value">{dateLabel}</span>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    {
+      heroImage && (
+        <div class="case-study__hero-icon container container--narrow">
+          <div class="case-study__icon-wrap" data-glow>
+            <img
+              src={heroImage}
+              alt={`${title} icon`}
+              width="80"
+              height="80"
+              loading="eager"
+              decoding="async"
+            />
+          </div>
+        </div>
+      )
+    }
+
+    <!-- Body -->
+    <div class="case-study__body section--compact">
+      <div class="container container--narrow">
+        {
+          problem && (
+            <section class="case-study__section" aria-labelledby="problem-heading">
+              <h2 id="problem-heading">The Problem</h2>
+              <p>{problem}</p>
+            </section>
+          )
+        }
+
+        {
+          approach && (
+            <section class="case-study__section" aria-labelledby="approach-heading">
+              <h2 id="approach-heading">Approach</h2>
+              <p>{approach}</p>
+            </section>
+          )
+        }
+
+        <!-- Markdown body content -->
+        <section class="case-study__section case-study__prose">
+          <Content />
+        </section>
+
+        <!-- Impact -->
+        {
+          impact.length > 0 && (
+            <section class="case-study__section" aria-labelledby="impact-heading">
+              <h2 id="impact-heading">Impact</h2>
+              <ul class="case-study__impact-list">
+                {impact.map((item) => (
+                  <li>{item}</li>
+                ))}
+              </ul>
+            </section>
+          )
+        }
+
+        <!-- Tools & methods -->
+        <section class="case-study__section" aria-labelledby="tech-heading">
+          <h2 id="tech-heading">Tools &amp; Methods</h2>
+          <div class="case-study__tags">
+            {tags.map((tag) => <span class="tag">{tag}</span>)}
+          </div>
+        </section>
+
+        <!-- Links -->
+        {
+          links && (links.dashboard || links.report || links.github || links.live) && (
+            <section class="case-study__section" aria-labelledby="links-heading">
+              <h2 id="links-heading">Links</h2>
+              <div class="case-study__links">
+                {links.dashboard && (
+                  <a href={links.dashboard} class="link" target="_blank" rel="noopener noreferrer">
+                    View Dashboard
+                  </a>
+                )}
+                {links.report && (
+                  <a href={links.report} class="link" target="_blank" rel="noopener noreferrer">
+                    Read Report
+                  </a>
+                )}
+                {links.github && (
+                  <a href={links.github} class="link" target="_blank" rel="noopener noreferrer">
+                    GitHub
+                  </a>
+                )}
+                {links.live && (
+                  <a href={links.live} class="link" target="_blank" rel="noopener noreferrer">
+                    Live
+                  </a>
+                )}
+              </div>
+            </section>
+          )
+        }
+      </div>
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  .case-study__header {
+    padding-bottom: var(--space-8);
+  }
+
+  .case-study__back {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-size: var(--text-sm);
+    color: var(--color-text-secondary);
+    margin-bottom: var(--space-8);
+    transition: color var(--duration-fast) var(--ease-out);
+  }
+
+  .case-study__back:hover {
+    color: var(--color-accent);
+  }
+
+  .case-study__company {
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+    font-weight: 500;
+    color: var(--color-accent);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: var(--space-3);
+  }
+
+  .case-study__title {
+    font-size: var(--text-3xl);
+    margin-bottom: var(--space-4);
+  }
+
+  .case-study__summary {
+    font-size: var(--text-lg);
+    max-width: 55ch;
+    margin-bottom: var(--space-8);
+  }
+
+  .case-study__meta {
+    display: flex;
+    gap: var(--space-8);
+    flex-wrap: wrap;
+    padding-top: var(--space-6);
+    border-top: 1px solid var(--color-border);
+  }
+
+  .case-study__meta-label {
+    display: block;
+    font-size: var(--text-xs);
+    font-weight: 500;
+    color: var(--color-text-tertiary);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: var(--space-1);
+  }
+
+  .case-study__meta-value {
+    font-size: var(--text-sm);
+    color: var(--color-text);
+    font-weight: 500;
+  }
+
+  .case-study__hero-icon {
+    margin-bottom: var(--space-10);
+  }
+
+  .case-study__icon-wrap {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 96px;
+    height: 96px;
+    border-radius: var(--radius-xl);
+    padding: var(--space-3);
+    background: var(--color-card-bg);
+    border: 1px solid var(--color-border);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+
+  .case-study__icon-wrap img {
+    width: 64px;
+    height: 64px;
+    object-fit: contain;
+    border-radius: var(--radius-md);
+  }
+
+  .case-study__section {
+    margin-bottom: var(--space-10);
+  }
+
+  .case-study__section h2 {
+    font-size: var(--text-xl);
+    margin-bottom: var(--space-4);
+  }
+
+  .case-study__section p {
+    line-height: var(--leading-relaxed);
+  }
+
+  .case-study__impact-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  .case-study__impact-list li {
+    font-size: var(--text-base);
+    color: var(--color-text-secondary);
+    padding-left: var(--space-5);
+    position: relative;
+    line-height: var(--leading-normal);
+  }
+
+  .case-study__impact-list li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.6em;
+    width: 6px;
+    height: 6px;
+    background: var(--color-accent);
+    border-radius: var(--radius-full);
+  }
+
+  .case-study__tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+  }
+
+  .tag {
+    display: inline-block;
+    padding: var(--space-1) var(--space-3);
+    background: var(--color-tag-bg);
+    color: var(--color-tag-text);
+    font-size: var(--text-xs);
+    font-weight: 500;
+    border-radius: var(--radius-full);
+  }
+
+  .case-study__links {
+    display: flex;
+    gap: var(--space-6);
+  }
+
+  /* Prose styling for markdown body */
+  .case-study__prose :global(h2) {
+    font-size: var(--text-xl);
+    margin-top: var(--space-10);
+    margin-bottom: var(--space-4);
+  }
+
+  .case-study__prose :global(h3) {
+    font-size: var(--text-lg);
+    margin-top: var(--space-8);
+    margin-bottom: var(--space-3);
+  }
+
+  .case-study__prose :global(p) {
+    margin-bottom: var(--space-4);
+    line-height: var(--leading-relaxed);
+  }
+
+  .case-study__prose :global(ul),
+  .case-study__prose :global(ol) {
+    margin-bottom: var(--space-4);
+    padding-left: var(--space-6);
+  }
+
+  .case-study__prose :global(li) {
+    margin-bottom: var(--space-2);
+    color: var(--color-text-secondary);
+    line-height: var(--leading-normal);
+  }
+
+  .case-study__prose :global(ul) {
+    list-style: disc;
+  }
+
+  .case-study__prose :global(ol) {
+    list-style: decimal;
+  }
+
+  @media (max-width: 640px) {
+    .case-study__meta {
+      gap: var(--space-4);
+    }
+  }
+</style>

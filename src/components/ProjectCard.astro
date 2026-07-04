@@ -1,0 +1,188 @@
+---
+interface Props {
+  title: string;
+  summary: string;
+  role: string;
+  company?: string;
+  tags: string[];
+  slug: string;
+  heroImage?: string;
+  featured?: boolean;
+}
+
+const { title, summary, role, company, tags, slug, heroImage, featured = false } = Astro.props;
+const base = import.meta.env.BASE_URL.replace(/\/?$/, "/");
+---
+
+<article class:list={["project-card", { "project-card--featured": featured }]} data-glow>
+  <a href={`${base}work/${slug}/`} class="project-card__link" aria-label={`View case study: ${title}`}>
+    <div class="project-card__body">
+      {heroImage && (
+        <div class="project-card__icon-wrap">
+          <img
+            src={heroImage}
+            alt=""
+            loading="lazy"
+            decoding="async"
+            width="44"
+            height="44"
+          />
+        </div>
+      )}
+      {company && <p class="project-card__company">{company}</p>}
+      <h3 class="project-card__title">{title}</h3>
+      <p class="project-card__role">{role}</p>
+      <p class="project-card__summary">{summary}</p>
+      <div class="project-card__tags" aria-label="Technologies used">
+        {tags.slice(0, 4).map((tag) => <span class="tag">{tag}</span>)}
+      </div>
+    </div>
+    <span class="project-card__arrow" aria-hidden="true">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+        <path d="M6 3l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+      </svg>
+    </span>
+  </a>
+</article>
+
+<style>
+  .project-card {
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    background: var(--color-card-bg);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    overflow: hidden;
+    position: relative;
+    transition:
+      border-color var(--duration-normal) var(--ease-out),
+      box-shadow var(--duration-normal) var(--ease-out),
+      transform var(--duration-normal) var(--ease-out),
+      background var(--duration-normal) var(--ease-out);
+  }
+
+  /* Gradient border glow on hover */
+  .project-card::before {
+    content: "";
+    position: absolute;
+    inset: -1px;
+    border-radius: inherit;
+    background: var(--gradient-card-border);
+    z-index: -1;
+    opacity: 0;
+    transition: opacity var(--duration-normal) var(--ease-out);
+  }
+
+  .project-card:hover {
+    border-color: rgba(20, 184, 166, 0.2);
+    background: var(--color-card-bg-hover);
+    box-shadow: var(--shadow-glow-sm);
+    transform: translateY(-4px);
+  }
+
+  .project-card:hover::before {
+    opacity: 1;
+  }
+
+  .project-card__link {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    text-decoration: none;
+    color: inherit;
+    position: relative;
+  }
+
+  .project-card__icon-wrap {
+    width: 48px;
+    height: 48px;
+    border-radius: var(--radius-md);
+    background: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px;
+    margin-bottom: var(--space-4);
+    transition: box-shadow var(--duration-normal) var(--ease-out);
+  }
+
+  .project-card:hover .project-card__icon-wrap {
+    box-shadow: var(--shadow-glow-sm);
+  }
+
+  .project-card__icon-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    border-radius: 4px;
+  }
+
+  .project-card__body {
+    padding: var(--space-6);
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .project-card__company {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    font-weight: 500;
+    color: var(--color-accent);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: var(--space-2);
+  }
+
+  .project-card__title {
+    font-size: var(--text-xl);
+    font-weight: 600;
+    margin-bottom: var(--space-1);
+    line-height: var(--leading-snug);
+    transition: color var(--duration-fast) var(--ease-out);
+  }
+
+  .project-card:hover .project-card__title {
+    background: var(--gradient-accent-text);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .project-card__role {
+    font-size: var(--text-sm);
+    color: var(--color-text-tertiary);
+    margin-bottom: var(--space-3);
+  }
+
+  .project-card__summary {
+    font-size: var(--text-sm);
+    color: var(--color-text-secondary);
+    line-height: var(--leading-normal);
+    flex: 1;
+    margin-bottom: var(--space-4);
+  }
+
+  .project-card__tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+  }
+
+  .project-card__arrow {
+    position: absolute;
+    top: var(--space-6);
+    right: var(--space-6);
+    color: var(--color-text-tertiary);
+    opacity: 0;
+    transform: translateX(-8px);
+    transition: all var(--duration-normal) var(--ease-out);
+  }
+
+  .project-card:hover .project-card__arrow {
+    opacity: 1;
+    transform: translateX(0);
+    color: var(--color-accent);
+  }
+</style>

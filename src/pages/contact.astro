@@ -1,0 +1,276 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+
+/*
+  The form uses Formspree (no backend needed).
+  PLACEHOLDER: replace YOUR_FORM_ID below with a real Formspree form ID
+  (create a free form at https://formspree.io). See CONTENT-GUIDE.md.
+*/
+const FORMSPREE_ENDPOINT = "https://formspree.io/f/YOUR_FORM_ID";
+---
+
+<BaseLayout
+  title="Contact | Anushka Kanoongo"
+  description="Get in touch with Anushka Kanoongo about healthcare data analytics, BI, and analytics roles or collaborations."
+>
+  <section class="section" aria-labelledby="contact-heading">
+    <div class="container container--narrow">
+      <h1 id="contact-heading" class="section-heading">Get in Touch</h1>
+      <p class="section-subheading">
+        Have a role to discuss, a data problem to solve, or just want to connect? I'd love to hear from you.
+      </p>
+
+      <div class="contact-grid">
+        <!-- Contact Form (Formspree, no server needed) -->
+        <form
+          class="contact-form fade-in"
+          action={FORMSPREE_ENDPOINT}
+          method="POST"
+          aria-label="Contact form"
+        >
+          <div class="form-group">
+            <label for="name" class="form-label">Name</label>
+            <input
+              type="text"
+              id="name"
+              name="name"
+              required
+              autocomplete="name"
+              class="form-input"
+              placeholder="Your name"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="email" class="form-label">Email</label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              required
+              autocomplete="email"
+              class="form-input"
+              placeholder="your@email.com"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="message" class="form-label">Message</label>
+            <textarea
+              id="message"
+              name="message"
+              required
+              rows="5"
+              class="form-input form-textarea"
+              placeholder="Tell me about the role, project, or question..."
+            ></textarea>
+          </div>
+
+          <!-- Honeypot for basic spam prevention -->
+          <div aria-hidden="true" style="position:absolute;left:-9999px;">
+            <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" />
+          </div>
+
+          <button type="submit" class="btn btn--primary btn--full">
+            Send Message
+          </button>
+        </form>
+
+        <!-- Sidebar -->
+        <aside class="contact-sidebar fade-in">
+          <div class="contact-card">
+            <h2 class="contact-card__title">Connect</h2>
+
+            <div class="contact-card__item">
+              <span class="contact-card__label">LinkedIn</span>
+              <a
+                href="https://www.linkedin.com/in/anushkakanoongo"
+                class="link"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                linkedin.com/in/anushkakanoongo
+              </a>
+            </div>
+
+            <div class="contact-card__item">
+              <span class="contact-card__label">Location</span>
+              <span>Chicago, IL</span>
+            </div>
+          </div>
+
+          <div class="contact-card">
+            <h2 class="contact-card__title">Open To</h2>
+            <ul class="contact-card__list">
+              <li>Healthcare / Quality Analytics roles</li>
+              <li>BI & Data Visualization</li>
+              <li>Analytics & Insights</li>
+              <li>Data Automation & Reporting</li>
+            </ul>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 320px;
+    gap: var(--space-12);
+    align-items: start;
+  }
+
+  /* Form Styles */
+  .contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-5);
+  }
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .form-label {
+    font-size: var(--text-sm);
+    font-weight: 500;
+    color: var(--color-text);
+  }
+
+  .form-input {
+    padding: var(--space-3) var(--space-4);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background: var(--color-card-bg);
+    font-size: var(--text-base);
+    color: var(--color-text);
+    transition:
+      border-color var(--duration-fast) var(--ease-out),
+      box-shadow var(--duration-fast) var(--ease-out);
+  }
+
+  .form-input::placeholder {
+    color: var(--color-text-tertiary);
+  }
+
+  .form-input:focus {
+    outline: none;
+    border-color: var(--color-accent);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-accent) 20%, transparent);
+  }
+
+  .form-textarea {
+    resize: vertical;
+    min-height: 120px;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-3) var(--space-6);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    border-radius: var(--radius-full);
+    border: none;
+    cursor: pointer;
+    transition:
+      transform var(--duration-fast) var(--ease-out),
+      box-shadow var(--duration-fast) var(--ease-out);
+  }
+
+  .btn:hover {
+    transform: translateY(-1px);
+  }
+
+  .btn--primary {
+    background: var(--gradient-accent);
+    color: #fff;
+  }
+
+  .btn--primary:hover {
+    box-shadow: 0 4px 20px rgba(20, 184, 166, 0.35), 0 0 40px rgba(16, 185, 129, 0.18);
+  }
+
+  .btn--full {
+    width: 100%;
+  }
+
+  /* Sidebar */
+  .contact-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+  }
+
+  .contact-card {
+    padding: var(--space-6);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    background: var(--color-card-bg);
+  }
+
+  .contact-card__title {
+    font-size: var(--text-base);
+    font-weight: 600;
+    margin-bottom: var(--space-4);
+  }
+
+  .contact-card__item {
+    margin-bottom: var(--space-4);
+  }
+
+  .contact-card__item:last-child {
+    margin-bottom: 0;
+  }
+
+  .contact-card__label {
+    display: block;
+    font-size: var(--text-xs);
+    font-weight: 500;
+    color: var(--color-text-tertiary);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: var(--space-1);
+  }
+
+  .contact-card__item span:not(.contact-card__label) {
+    font-size: var(--text-sm);
+    color: var(--color-text-secondary);
+  }
+
+  .contact-card__list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .contact-card__list li {
+    font-size: var(--text-sm);
+    color: var(--color-text-secondary);
+    padding-left: var(--space-5);
+    position: relative;
+  }
+
+  .contact-card__list li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.55em;
+    width: 6px;
+    height: 6px;
+    background: var(--gradient-accent);
+    border-radius: var(--radius-full);
+  }
+
+  @media (max-width: 768px) {
+    .contact-grid {
+      grid-template-columns: 1fr;
+      gap: var(--space-8);
+    }
+  }
+</style>

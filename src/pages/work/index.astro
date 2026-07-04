@@ -1,0 +1,52 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import ProjectCard from "@components/ProjectCard.astro";
+import { getCollection } from "astro:content";
+
+const allWork = await getCollection("work");
+const sortedWork = allWork.sort((a, b) => a.data.sortOrder - b.data.sortOrder);
+---
+
+<BaseLayout
+  title="Case Studies | Anushka Kanoongo"
+  description="Healthcare data analytics case studies by Anushka Kanoongo — turning clinical, claims, and operational data into dashboards, models, and decisions that improve outcomes and reduce cost."
+>
+  <section class="section" aria-labelledby="work-heading">
+    <div class="container">
+      <h1 id="work-heading" class="section-heading">Case Studies</h1>
+      <p class="section-subheading">
+        Selected healthcare analytics work — from raw clinical, claims, and operational data to dashboards, models, and decisions that moved real metrics.
+      </p>
+      <div class="project-grid">
+        {
+          sortedWork.map((project) => (
+            <ProjectCard
+              title={project.data.title}
+              summary={project.data.summary}
+              role={project.data.role}
+              company={project.data.company}
+              tags={project.data.tags}
+              slug={project.slug}
+              heroImage={project.data.heroImage}
+              featured={project.data.featured}
+            />
+          ))
+        }
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .project-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: var(--space-6);
+  }
+
+  @media (max-width: 640px) {
+    .project-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

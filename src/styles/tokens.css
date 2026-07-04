@@ -1,0 +1,133 @@
+/* ============================================
+   Design Tokens: "Signal" Dark-First Direction
+   ============================================ */
+
+:root {
+  /* Colors: Dark-first (default) — Teal & Emerald */
+  --color-bg: #07110f;
+  --color-bg-secondary: #0c1a17;
+  --color-bg-tertiary: #12211d;
+  --color-text: #f0fdfa;
+  --color-text-secondary: #a2bdb6;
+  --color-text-tertiary: #6f8b84;
+  --color-accent: #14b8a6;
+  --color-accent-secondary: #10b981;
+  --color-accent-hover: #2dd4bf;
+  --color-border: rgba(255, 255, 255, 0.09);
+  --color-border-hover: rgba(255, 255, 255, 0.16);
+  --color-card-bg: rgba(255, 255, 255, 0.035);
+  --color-card-bg-hover: rgba(255, 255, 255, 0.06);
+  --color-card-shadow: rgba(0, 0, 0, 0.5);
+  --color-code-bg: #10201c;
+  --color-tag-bg: rgba(255, 255, 255, 0.06);
+  --color-tag-text: #a2bdb6;
+  --color-glow: rgba(20, 184, 166, 0.16);
+  --color-glow-secondary: rgba(16, 185, 129, 0.14);
+
+  /* Gradient */
+  --gradient-accent: linear-gradient(135deg, #14b8a6, #10b981);
+  --gradient-accent-text: linear-gradient(120deg, #5eead4, #34d399, #6ee7b7);
+  --gradient-subtle: linear-gradient(135deg, rgba(20, 184, 166, 0.1), rgba(16, 185, 129, 0.1));
+  --gradient-card-border: linear-gradient(135deg, rgba(20, 184, 166, 0.2), rgba(16, 185, 129, 0.2), rgba(20, 184, 166, 0.05));
+  --gradient-mesh: radial-gradient(at 27% 37%, rgba(20, 184, 166, 0.08) 0px, transparent 50%),
+    radial-gradient(at 97% 21%, rgba(16, 185, 129, 0.08) 0px, transparent 50%),
+    radial-gradient(at 52% 99%, rgba(20, 184, 166, 0.05) 0px, transparent 50%),
+    radial-gradient(at 10% 29%, rgba(45, 212, 191, 0.05) 0px, transparent 50%);
+
+  /* Typography */
+  --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", "SF Mono", "Fira Code", monospace;
+
+  --text-xs: clamp(0.75rem, 0.7rem + 0.2vw, 0.8125rem);
+  --text-sm: clamp(0.8125rem, 0.78rem + 0.2vw, 0.875rem);
+  --text-base: clamp(0.9375rem, 0.9rem + 0.2vw, 1rem);
+  --text-lg: clamp(1.0625rem, 1rem + 0.3vw, 1.125rem);
+  --text-xl: clamp(1.25rem, 1.1rem + 0.5vw, 1.5rem);
+  --text-2xl: clamp(1.5rem, 1.2rem + 1vw, 2rem);
+  --text-3xl: clamp(2rem, 1.5rem + 1.5vw, 2.75rem);
+  --text-4xl: clamp(2.5rem, 1.8rem + 2vw, 3.5rem);
+  --text-5xl: clamp(3rem, 2rem + 3vw, 4.5rem);
+
+  --leading-tight: 1.1;
+  --leading-snug: 1.3;
+  --leading-normal: 1.6;
+  --leading-relaxed: 1.75;
+
+  --tracking-tight: -0.03em;
+  --tracking-normal: -0.011em;
+
+  /* Spacing */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+  --space-20: 5rem;
+  --space-24: 6rem;
+  --space-32: 8rem;
+
+  /* Layout */
+  --max-width-prose: 720px;
+  --max-width-wide: 1120px;
+  --max-width-full: 1280px;
+  --container-padding: clamp(1.25rem, 4vw, 2.5rem);
+
+  /* Borders */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+  --radius-xl: 28px;
+  --radius-full: 9999px;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.3), 0 1px 4px rgba(0, 0, 0, 0.2);
+  --shadow-lg: 0 8px 40px rgba(0, 0, 0, 0.4), 0 2px 12px rgba(0, 0, 0, 0.3);
+  --shadow-glow: 0 0 40px var(--color-glow), 0 0 80px var(--color-glow-secondary);
+  --shadow-glow-sm: 0 0 20px var(--color-glow);
+
+  /* Transitions */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --duration-fast: 150ms;
+  --duration-normal: 300ms;
+  --duration-slow: 500ms;
+  --duration-slower: 800ms;
+}
+
+/* Light mode override */
+@media (prefers-color-scheme: light) {
+  :root {
+    --color-bg: #f6faf9;
+    --color-bg-secondary: #eef4f3;
+    --color-bg-tertiary: #e2edeb;
+    --color-text: #102a2e;
+    --color-text-secondary: #45605f;
+    --color-text-tertiary: #718b88;
+    --color-accent: #0d9488;
+    --color-accent-secondary: #0891b2;
+    --color-accent-hover: #0f766e;
+    --color-border: rgba(13, 148, 136, 0.16);
+    --color-border-hover: rgba(13, 148, 136, 0.3);
+    --color-card-bg: rgba(255, 255, 255, 0.85);
+    --color-card-bg-hover: rgba(255, 255, 255, 1);
+    --color-card-shadow: rgba(15, 50, 55, 0.08);
+    --color-code-bg: #eef4f3;
+    --color-tag-bg: rgba(13, 148, 136, 0.06);
+    --color-tag-text: #45605f;
+    --color-glow: rgba(13, 148, 136, 0.1);
+    --color-glow-secondary: rgba(8, 145, 178, 0.08);
+    --gradient-accent-text: linear-gradient(120deg, #0d9488, #0891b2, #0e7490);
+    --gradient-mesh: radial-gradient(at 27% 37%, rgba(13, 148, 136, 0.05) 0px, transparent 50%),
+      radial-gradient(at 97% 21%, rgba(8, 145, 178, 0.05) 0px, transparent 50%),
+      radial-gradient(at 52% 99%, rgba(13, 148, 136, 0.03) 0px, transparent 50%),
+      radial-gradient(at 10% 29%, rgba(45, 212, 191, 0.04) 0px, transparent 50%);
+    --shadow-glow: 0 0 30px rgba(13, 148, 136, 0.07);
+    --shadow-glow-sm: 0 0 15px rgba(13, 148, 136, 0.05);
+  }
+}

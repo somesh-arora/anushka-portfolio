@@ -1,0 +1,290 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import Hero from "@components/Hero.astro";
+import ProjectCard from "@components/ProjectCard.astro";
+import ExperienceCard from "@components/ExperienceCard.astro";
+import ExperienceTimeline from "@components/ExperienceTimeline.astro";
+import { getCollection } from "astro:content";
+
+const base = import.meta.env.BASE_URL.replace(/\/?$/, "/");
+
+// ── Featured case studies ────────────────────────────────
+const allWork = await getCollection("work");
+const featuredWork = allWork
+  .filter((w) => w.data.featured)
+  .sort((a, b) => a.data.sortOrder - b.data.sortOrder);
+
+// ── Experience (grouped by employer, newest first) ───────
+const experience = await getCollection("experience");
+const sortedExperience = experience.sort(
+  (a, b) => a.data.sortOrder - b.data.sortOrder
+);
+
+type ExpEntry = (typeof sortedExperience)[number];
+type Group = { company: string; logo?: string; roles: ExpEntry[] };
+
+const groups: Group[] = [];
+for (const exp of sortedExperience) {
+  const last = groups[groups.length - 1];
+  if (last && last.company === exp.data.company) last.roles.push(exp);
+  else groups.push({ company: exp.data.company, logo: exp.data.logo, roles: [exp] });
+}
+
+function formatDate(date: Date): string {
+  return date.toLocaleDateString("en-US", { month: "short", year: "numeric", timeZone: "UTC" });
+}
+function computeDuration(start: Date, end: Date | null): string {
+  const endDate = end || new Date();
+  const months =
+    (endDate.getFullYear() - start.getFullYear()) * 12 +
+    (endDate.getMonth() - start.getMonth());
+  const years = Math.floor(months / 12);
+  const rem = months % 12;
+  if (years > 0 && rem > 0) return `${years} yr${years > 1 ? "s" : ""} ${rem} mo${rem > 1 ? "s" : ""}`;
+  if (years > 0) return `${years} yr${years > 1 ? "s" : ""}`;
+  return `${rem} mo${rem > 1 ? "s" : ""}`;
+}
+function groupMeta(roles: ExpEntry[]) {
+  const starts = roles.map((r) => r.data.startDate.getTime());
+  const earliest = new Date(Math.min(...starts));
+  const isCurrent = roles.some((r) => !r.data.endDate);
+  const latest = isCurrent
+    ? null
+    : new Date(Math.max(...roles.map((r) => (r.data.endDate as Date).getTime())));
+  return {
+    isCurrent,
+    overallRange: `${formatDate(earliest)} – ${latest ? formatDate(latest) : "Present"}`,
+    totalDuration: computeDuration(earliest, latest),
+  };
+}
+
+// ── Impact highlights (PLACEHOLDER — replace with real figures) ──
+const impactStats = [
+  { number: "40%", label: "Manual Review Cut" },
+  { number: "100%", label: "Data Alignment" },
+  { number: "15+", label: "Member Requests Delivered" },
+  { number: "4.0", label: "Graduate GPA" },
+];
+
+// ── Tools & skills marquee (edit freely) ─────────────────
+const tools = [
+  "SQL", "SAS", "Python", "Power BI", "Tableau", "MicroStrategy", "Excel",
+  "Benchmarking", "Risk-Model APIs", "Data Automation", "Healthcare Analytics",
+  "CDI", "KPI Reporting", "Data Visualization",
+];
+---
+
+<BaseLayout title="Anushka Kanoongo | Healthcare Data & Analytics">
+  <Hero
+    subheadline="Healthcare Analytics & Insights"
+    headline="Transforming complex healthcare data into strategic decisions."
+    description="Analytics & Insights Associate at Vizient. I turn complex clinical, quality, and operational data into automation, dashboards, and insights that drive strategic and operational impact."
+    primaryCta={{ label: "View Case Studies", href: `${base}work/` }}
+    secondaryCta={{ label: "About Me", href: `${base}about/` }}
+  />
+
+  <!-- Impact highlights -->
+  <section class="section section--compact" aria-label="Impact highlights">
+    <div class="container">
+      <div class="stats-row stagger-children">
+        {
+          impactStats.map((s) => (
+            <div class="stat">
+              <p class="stat__number">{s.number}</p>
+              <p class="stat__label">{s.label}</p>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Tools marquee -->
+  <section class="marquee-section" aria-label="Tools and skills">
+    <div class="marquee">
+      <div class="marquee__track">
+        {tools.map((t) => <span class="marquee__item">{t}</span>)}
+        {tools.map((t) => <span class="marquee__item" aria-hidden="true">{t}</span>)}
+      </div>
+    </div>
+  </section>
+
+  {
+    featuredWork.length > 0 && (
+      <section class="section section--compact" aria-labelledby="featured-heading">
+        <div class="container">
+          <h2 id="featured-heading" class="section-heading">Featured Case Studies</h2>
+          <p class="section-subheading">
+            A few analytics projects where the data led to measurable outcomes.
+          </p>
+          <div class="project-grid stagger-children">
+            {featuredWork.map((project) => (
+              <ProjectCard
+                title={project.data.title}
+                summary={project.data.summary}
+                role={project.data.role}
+                company={project.data.company}
+                tags={project.data.tags}
+                slug={project.slug}
+                heroImage={project.data.heroImage}
+                featured={true}
+              />
+            ))}
+          </div>
+          <div class="section-cta">
+            <a href={`${base}work/`} class="link">
+              View all case studies
+              <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true" style="display:inline;vertical-align:middle;margin-left:4px;">
+                <path d="M6 3l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </a>
+          </div>
+        </div>
+      </section>
+    )
+  }
+
+  <!-- Experience -->
+  <section class="section" aria-labelledby="experience-heading">
+    <div class="container">
+      <h2 id="experience-heading" class="section-heading">Experience</h2>
+      <p class="section-subheading">
+        A track record of turning healthcare data into decisions across teams and organizations.
+      </p>
+      <div class="experience-list stagger-children">
+        {
+          groups.map((g) =>
+            g.roles.length > 1 ? (
+              <ExperienceTimeline
+                company={g.company}
+                logo={g.logo}
+                isCurrent={groupMeta(g.roles).isCurrent}
+                overallRange={groupMeta(g.roles).overallRange}
+                totalDuration={groupMeta(g.roles).totalDuration}
+                roles={g.roles.map((r) => ({
+                  role: r.data.role,
+                  location: r.data.location,
+                  startDate: r.data.startDate,
+                  endDate: r.data.endDate,
+                  highlights: r.data.highlights,
+                }))}
+              />
+            ) : (
+              <ExperienceCard
+                company={g.roles[0].data.company}
+                role={g.roles[0].data.role}
+                location={g.roles[0].data.location}
+                startDate={g.roles[0].data.startDate}
+                endDate={g.roles[0].data.endDate}
+                highlights={g.roles[0].data.highlights}
+                logo={g.roles[0].data.logo}
+              />
+            )
+          )
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="section section--compact cta-section" aria-labelledby="cta-heading">
+    <div class="container container--narrow" style="text-align:center;">
+      <h2 id="cta-heading" class="section-heading">Let's turn data into decisions.</h2>
+      <p class="section-subheading" style="margin-inline:auto;">
+        Open to healthcare data analyst, BI, and analytics roles — and always happy to talk data.
+      </p>
+      <a href={`${base}contact/`} class="btn btn--primary btn--glow">Get in Touch</a>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .project-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: var(--space-6);
+    margin-bottom: var(--space-8);
+  }
+
+  .section-cta {
+    text-align: center;
+  }
+
+  .marquee-section {
+    padding-block: var(--space-8);
+  }
+
+  .experience-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+  }
+
+  .cta-section {
+    border-top: 1px solid var(--color-border);
+    margin-top: var(--space-8);
+    position: relative;
+  }
+
+  .cta-section::before {
+    content: "";
+    position: absolute;
+    top: -1px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 200px;
+    height: 1px;
+    background: var(--gradient-accent);
+    opacity: 0.5;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2);
+    padding: var(--space-3) var(--space-6);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    border-radius: var(--radius-full);
+    transition: all var(--duration-normal) var(--ease-out);
+    white-space: nowrap;
+    position: relative;
+  }
+
+  .btn:hover {
+    transform: translateY(-2px);
+  }
+
+  .btn--primary {
+    background: var(--gradient-accent);
+    color: #fff;
+    border: none;
+  }
+
+  .btn--primary:hover {
+    box-shadow: 0 4px 20px rgba(20, 184, 166, 0.4), 0 0 40px rgba(16, 185, 129, 0.2);
+  }
+
+  .btn--glow::after {
+    content: "";
+    position: absolute;
+    inset: -1px;
+    border-radius: inherit;
+    background: var(--gradient-accent);
+    z-index: -1;
+    filter: blur(16px);
+    opacity: 0.4;
+    transition: opacity var(--duration-normal) var(--ease-out);
+  }
+
+  .btn--glow:hover::after {
+    opacity: 0.6;
+  }
+
+  @media (max-width: 640px) {
+    .project-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

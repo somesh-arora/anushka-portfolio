@@ -1,0 +1,189 @@
+---
+interface Props {
+  company: string;
+  role: string;
+  location: string;
+  startDate: Date;
+  endDate: Date | null;
+  highlights: string[];
+  logo?: string;
+}
+
+const { company, role, location, startDate, endDate, highlights, logo } = Astro.props;
+
+function formatDate(date: Date): string {
+  return date.toLocaleDateString("en-US", { month: "short", year: "numeric", timeZone: "UTC" });
+}
+
+const dateRange = `${formatDate(startDate)} – ${endDate ? formatDate(endDate) : "Present"}`;
+const isCurrent = !endDate;
+---
+
+<article class="exp-card fade-in" data-glow>
+  <div class="exp-card__header">
+    {
+      logo ? (
+        <img
+          src={logo}
+          alt={`${company} logo`}
+          class="exp-card__logo"
+          width="44"
+          height="44"
+          loading="lazy"
+          decoding="async"
+        />
+      ) : (
+        <div class="exp-card__logo-placeholder">
+          <span>{company.charAt(0)}</span>
+        </div>
+      )
+    }
+    <div class="exp-card__meta">
+      <div class="exp-card__title-row">
+        <h3 class="exp-card__company">{company}</h3>
+        {isCurrent && <span class="exp-card__current-badge">Current</span>}
+      </div>
+      <p class="exp-card__role">{role}</p>
+      <p class="exp-card__details">
+        <span>{location}</span>
+        <span aria-hidden="true" class="exp-card__sep">&middot;</span>
+        <time>{dateRange}</time>
+      </p>
+    </div>
+  </div>
+  <ul class="exp-card__highlights" role="list">
+    {highlights.map((item) => <li>{item}</li>)}
+  </ul>
+</article>
+
+<style>
+  .exp-card {
+    padding: var(--space-6);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    background: var(--color-card-bg);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    position: relative;
+    transition:
+      border-color var(--duration-normal) var(--ease-out),
+      background var(--duration-normal) var(--ease-out),
+      box-shadow var(--duration-normal) var(--ease-out),
+      transform var(--duration-normal) var(--ease-out);
+  }
+
+  .exp-card:hover {
+    border-color: var(--color-border-hover);
+    background: var(--color-card-bg-hover);
+    box-shadow: var(--shadow-glow-sm);
+    transform: translateY(-2px);
+  }
+
+  .exp-card__header {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-4);
+    margin-bottom: var(--space-5);
+  }
+
+  .exp-card__logo {
+    width: 44px;
+    height: 44px;
+    border-radius: var(--radius-md);
+    object-fit: contain;
+    flex-shrink: 0;
+    border: 1px solid var(--color-border);
+    padding: 4px;
+    background: var(--color-bg-secondary);
+  }
+
+  .exp-card__logo-placeholder {
+    width: 44px;
+    height: 44px;
+    border-radius: var(--radius-md);
+    flex-shrink: 0;
+    background: var(--gradient-accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-weight: 700;
+    font-size: var(--text-lg);
+  }
+
+  .exp-card__title-row {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+  }
+
+  .exp-card__company {
+    font-size: var(--text-lg);
+    font-weight: 600;
+    line-height: var(--leading-snug);
+  }
+
+  .exp-card__current-badge {
+    font-size: 0.65rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding: 2px 8px;
+    border-radius: var(--radius-full);
+    background: rgba(34, 197, 94, 0.1);
+    color: #22c55e;
+    border: 1px solid rgba(34, 197, 94, 0.2);
+    white-space: nowrap;
+  }
+
+  .exp-card__role {
+    font-size: var(--text-base);
+    color: var(--color-text-secondary);
+    font-weight: 500;
+  }
+
+  .exp-card__details {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-size: var(--text-sm);
+    color: var(--color-text-tertiary);
+    margin-top: var(--space-1);
+  }
+
+  .exp-card__sep {
+    color: var(--color-border-hover);
+  }
+
+  .exp-card__highlights {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    padding-left: calc(44px + var(--space-4));
+  }
+
+  .exp-card__highlights li {
+    font-size: var(--text-sm);
+    color: var(--color-text-secondary);
+    line-height: var(--leading-normal);
+    padding-left: var(--space-5);
+    position: relative;
+  }
+
+  .exp-card__highlights li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.55em;
+    width: 6px;
+    height: 6px;
+    background: var(--gradient-accent);
+    border-radius: var(--radius-full);
+  }
+
+  @media (max-width: 640px) {
+    .exp-card__highlights {
+      padding-left: 0;
+    }
+  }
+</style>
