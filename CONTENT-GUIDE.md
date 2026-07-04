@@ -135,23 +135,30 @@ The form posts to [Formspree](https://formspree.io) so there's **no backend to r
 
 ## 4. Domain & SEO
 
-1. Set your real domain in **two** places:
-   - `astro.config.mjs` → `site: "https://your-domain.com"`
-   - `public/robots.txt` → the `Sitemap:` URL
-2. For a custom domain on GitHub Pages, add a file `public/CNAME` containing just your
-   domain (e.g. `anushkakanoongo.com`).
-3. The name, job title, and social links used for rich search results live in the
-   `JSON-LD` block in `src/layouts/BaseLayout.astro`.
+**Currently deployed at:** `https://somesharora.com/anushka-portfolio/`
+(also `https://somesh-arora.github.io/anushka-portfolio/`). The site is configured with a
+**base path** of `/anushka-portfolio`, so every internal link and asset resolves under that sub-path.
+
+### Switching to a custom domain (e.g. anushkakanoongo.com)
+A custom domain serves at the **root**, so when it's ready:
+1. `astro.config.mjs` → set `base: "/"` and `site: "https://anushkakanoongo.com"`.
+2. Add `public/CNAME` containing just the domain: `anushkakanoongo.com`.
+3. `public/robots.txt` → update the `Sitemap:` URL to the new domain.
+4. Point the domain's DNS at GitHub Pages, then commit + push (auto-deploys).
+
+**No other code changes are needed** — all internal links read the base path automatically, so
+this is a two-line config change plus the CNAME.
+
+The name, job title, and social links for rich search results live in the `JSON-LD` block in
+`src/layouts/BaseLayout.astro`.
 
 ---
 
 ## 5. Deploy
 
-### Option A — GitHub Pages (workflow included)
-1. Create a GitHub repo and push this project to it.
-2. In the repo: **Settings → Pages → Build and deployment → Source → GitHub Actions**.
-3. Push to `main` (or `master`). The workflow in `.github/workflows/deploy.yml`
-   builds and deploys automatically.
+### Option A — GitHub Pages (already set up)
+This repo is **already deployed** via `.github/workflows/deploy.yml`. Every push to `main`
+rebuilds and redeploys automatically — no manual steps. Repo: `somesh-arora/anushka-portfolio`.
 
 ### Option B — Netlify / Vercel / Cloudflare Pages
 Import the repo and use:
