@@ -43,6 +43,9 @@ const fullOgImage = new URL(ogImage, siteUrl).href;
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={pageUrl} />
+    {/* Keep the interim sub-path deploy (under somesharora.com) out of search results.
+        Auto-disables when moving to a root custom domain (base === "/"). */}
+    {base !== "/" && <meta name="robots" content="noindex, nofollow" />}
 
     <!-- Preconnect for fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
