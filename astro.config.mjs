@@ -3,8 +3,8 @@ import sitemap from "@astrojs/sitemap";
 import mdx from "@astrojs/mdx";
 
 export default defineConfig({
-  site: "https://somesh-arora.github.io",
-  base: "/anushka-portfolio",
+  site: "https://anushkakanoongo.com",
+  base: "/",
   integrations: [sitemap(), mdx()],
   output: "static",
   build: {

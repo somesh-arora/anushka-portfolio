@@ -135,19 +135,24 @@ The form posts to [Formspree](https://formspree.io) so there's **no backend to r
 
 ## 4. Domain & SEO
 
-**Currently deployed at:** `https://somesharora.com/anushka-portfolio/`
-(also `https://somesh-arora.github.io/anushka-portfolio/`). The site is configured with a
-**base path** of `/anushka-portfolio`, so every internal link and asset resolves under that sub-path.
+**Currently deployed at:** `https://anushkakanoongo.com`
+(custom domain served at the **root**, via GitHub Pages). The site's `base` is `/`, so every
+internal link and asset resolves from the root. A `public/CNAME` file pins the custom domain
+and `public/robots.txt` points its `Sitemap:` at the custom domain.
 
-### Switching to a custom domain (e.g. anushkakanoongo.com)
-A custom domain serves at the **root**, so when it's ready:
-1. `astro.config.mjs` → set `base: "/"` and `site: "https://anushkakanoongo.com"`.
-2. Add `public/CNAME` containing just the domain: `anushkakanoongo.com`.
-3. `public/robots.txt` → update the `Sitemap:` URL to the new domain.
-4. Point the domain's DNS at GitHub Pages, then commit + push (auto-deploys).
+### DNS setup (at the domain registrar)
+For the apex domain `anushkakanoongo.com`, create **A records** pointing at GitHub Pages:
+`185.199.108.153`, `185.199.109.153`, `185.199.110.153`, `185.199.111.153`.
+For `www`, add a **CNAME** record pointing at `somesh-arora.github.io`.
+Then in the repo: **Settings → Pages → Custom domain**, enter `anushkakanoongo.com` and enable
+**Enforce HTTPS** once the certificate is provisioned.
 
-**No other code changes are needed** — all internal links read the base path automatically, so
-this is a two-line config change plus the CNAME.
+### Reverting to the GitHub Pages sub-path (if ever needed)
+1. `astro.config.mjs` → set `base: "/anushka-portfolio"` and `site: "https://somesh-arora.github.io"`.
+2. Delete `public/CNAME`.
+3. `public/robots.txt` → point the `Sitemap:` URL back at the sub-path.
+
+**No other code changes are needed** — all internal links read the base path automatically.
 
 The name, job title, and social links for rich search results live in the `JSON-LD` block in
 `src/layouts/BaseLayout.astro`.

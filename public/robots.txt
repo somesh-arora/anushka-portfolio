@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://somesh-arora.github.io/anushka-portfolio/sitemap-index.xml
+Sitemap: https://anushkakanoongo.com/sitemap-index.xml
